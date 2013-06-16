@@ -1,6 +1,6 @@
-class resolvconf {
-  $nameservers = extlookup('resolvconf_nameservers', [])
-
+class resolvconf(
+  $nameservers = undef
+) {
   anchor { 'resolvconf::begin': }
 
   class { 'resolvconf::package':
