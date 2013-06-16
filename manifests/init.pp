@@ -1,3 +1,13 @@
+# = Class: resolvconf
+#
+# Manage nameservers with resolvconf on Debian-alike systems.
+#
+# == Parameters:
+#
+# [*nameservers*]
+#   Nameservers to favour in the resulting `resolv.conf`.
+#   Default: undef, see resolvconf::config
+#
 class resolvconf(
   $nameservers = undef
 ) {
