@@ -9,14 +9,14 @@ describe 'dhcp_enabled' do
   let(:file_path) { '/etc/network/interfaces' }
   before :each do
     Facter.clear
-    Facter.fact(:osfamily).should_receive(:value).and_return('Debian')
+    Facter.fact(:osfamily).expects(:value).returns('Debian')
     Facter.collection.loader.load(:dhcp_enabled)
   end
 
   context 'no interfaces files' do
     before :each do
-      FileTest.should_receive('exists?').with(file_path)
-        .and_return(false)
+      FileTest.expects('exists?').with(file_path)
+        .returns(false)
     end
 
     it { Facter.fact(:dhcp_enabled).value.should == 'false' }
@@ -24,10 +24,10 @@ describe 'dhcp_enabled' do
 
   context 'inet dhcp' do
     before :each do
-      FileTest.should_receive('exists?').with(file_path)
-        .and_return(true)
-      File.should_receive(:read).with(file_path)
-        .and_return("auto eth0\niface eth0 inet dhcp\n")
+      FileTest.expects('exists?').with(file_path)
+        .returns(true)
+      File.expects(:read).with(file_path)
+        .returns("auto eth0\niface eth0 inet dhcp\n")
     end
 
     it { Facter.fact(:dhcp_enabled).value.should == 'true' }
@@ -35,10 +35,10 @@ describe 'dhcp_enabled' do
 
   context 'inet static' do
     before :each do
-      FileTest.should_receive('exists?').with(file_path)
-        .and_return(true)
-      File.should_receive(:read).with(file_path)
-        .and_return("auto eth0\niface eth0 inet static\n")
+      FileTest.expects('exists?').with(file_path)
+        .returns(true)
+      File.expects(:read).with(file_path)
+        .returns("auto eth0\niface eth0 inet static\n")
     end
 
     it { Facter.fact(:dhcp_enabled).value.should == 'false' }
