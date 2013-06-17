@@ -1,14 +1,13 @@
 require 'rspec/core/rake_task'
 
-# Ignore vendored code. Called by other tasks.
-def exclude_paths
-  ["vendor/**/*"]
-end
+# Ignore vendored code.
+exclude_paths = ["vendor/**/*"]
 
-# Break tasks out to individual rake files to prevent clutter.
-FileList['lib/tasks/*.rake'].each do |rake_file|
-  import rake_file
-end
+require 'puppet-lint/tasks/puppet-lint'
+PuppetLint.configuration.ignore_paths = exclude_paths
+
+require 'puppet-syntax/tasks/puppet-syntax'
+PuppetSyntax.exclude_paths = exclude_paths
 
 task :default => [
   :syntax,
