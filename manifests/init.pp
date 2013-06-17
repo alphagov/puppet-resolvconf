@@ -22,8 +22,9 @@ class resolvconf(
   }
 
   class { 'resolvconf::config':
-    nameservers => $nameservers,
-    notify      => Class['resolvconf::reload'],
+    nameservers   => $nameservers,
+    override_dhcp => $override_dhcp,
+    notify        => Class['resolvconf::reload'],
   }
 
   class { 'resolvconf::reload':
