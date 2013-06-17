@@ -3,8 +3,52 @@ require 'spec_helper'
 describe 'resolvconf::config', :type => :class do
   let(:file_path) { '/etc/resolvconf/resolv.conf.d/head' }
 
+  context 'use_local' do
+    let(:resolv_content) {
+      /YOUR CHANGES WILL BE OVERWRITTEN\nnameserver 127.0.0.1$/
+    }
+
+    context 'false (default)' do
+      let(:params) {{
+        :nameservers => ['1.1.1.1', '2.2.2.2'],
+      }}
+
+      it { should_not contain_file(file_path).with_content(resolv_content) }
+    end
+
+    context 'true, with nameservers' do
+      let(:params) {{
+        :use_local   => true,
+        :nameservers => ['1.1.1.1', '2.2.2.2'],
+      }}
+
+      it { should contain_file(file_path).with_content(resolv_content) }
+    end
+
+    context 'true, without nameservers' do
+      let(:params) {{
+        :use_local => true,
+      }}
+
+      it { should contain_file(file_path).with_content(resolv_content) }
+    end
+
+    context 'true, with dhcp_enabled' do
+      let(:facts) {{
+        :dhcp_enabled => 'true',
+      }}
+      let(:params) {{
+        :use_local => true,
+      }}
+
+      it { should contain_file(file_path).with_content(resolv_content) }
+    end
+  end
+
   context 'dhcp_enabled true' do
-    let(:facts) {{ :dhcp_enabled => 'true' }}
+    let(:facts) {{
+      :dhcp_enabled => 'true',
+    }}
 
     context 'override_dhcp false (default)' do
       let(:params) {{

@@ -8,6 +8,12 @@ else
   nss = @nameservers
 end
 
+if @use_local
+-%>
+nameserver 127.0.0.1
+<%
+end
+
 unless nss.empty? or (@dhcp_enabled == 'true' && ! @override_dhcp)
   nss.each do |ns|
 -%>

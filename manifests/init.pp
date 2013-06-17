@@ -4,6 +4,9 @@
 #
 # == Parameters:
 #
+# [*use_local*]
+#   See resolvconf::config
+#
 # [*nameservers*]
 #   See resolvconf::config
 #
@@ -11,6 +14,7 @@
 #   See resolvconf::config
 #
 class resolvconf(
+  $use_local = undef,
   $nameservers = undef,
   $override_dhcp = undef
 ) {
@@ -22,6 +26,7 @@ class resolvconf(
   }
 
   class { 'resolvconf::config':
+    use_local     => $use_local,
     nameservers   => $nameservers,
     override_dhcp => $override_dhcp,
     notify        => Class['resolvconf::reload'],

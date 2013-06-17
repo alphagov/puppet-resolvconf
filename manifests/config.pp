@@ -8,6 +8,11 @@
 #
 # == Parameters:
 #
+# [*use_local*]
+#   Prepend `127.0.0.1` to the list of nameservers to prefer a local caching
+#   forwarder like dnsmasq.
+#   Default: false
+#
 # [*nameservers*]
 #   Nameservers to favour in the resulting `resolv.conf`.
 #   Default: []
@@ -19,6 +24,7 @@
 #
 #
 class resolvconf::config(
+  $use_local = false,
   $nameservers = [],
   $override_dhcp = false
 ) {
