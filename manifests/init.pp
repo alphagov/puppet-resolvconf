@@ -5,15 +5,14 @@
 # == Parameters:
 #
 # [*nameservers*]
-#   Nameservers to favour in the resulting `resolv.conf`.
-#   Default: undef, see resolvconf::config
+#   See resolvconf::config
 #
 # [*override_dhcp*]
-#   Whether to override DHCP nameservers.
-#   Default: undef, see resolvconf::config
+#   See resolvconf::config
 #
 class resolvconf(
-  $nameservers = undef
+  $nameservers = undef,
+  $override_dhcp = undef
 ) {
   anchor { 'resolvconf::begin': }
 
