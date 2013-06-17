@@ -6,17 +6,21 @@
 # Using this rather brute force method, instead of `interfaces(5)`, because
 # it requires no other parsing or knowledge about the network configuration.
 #
-# If the `$::dhcp_enabled` fact is true it will not append anything to
-# prevent the nameservers provided by DHCP from being ignored.
-#
 # == Parameters:
 #
 # [*nameservers*]
 #   Nameservers to favour in the resulting `resolv.conf`.
 #   Default: []
 #
+# [*override_dhcp*]
+#   Whether nameservers should be prepended when the `dhcp_enabled` fact is
+#   true. Will supersede nameservers provided by DHCP.
+#   Default: false
+#
+#
 class resolvconf::config(
-  $nameservers = []
+  $nameservers = [],
+  $override_dhcp = false
 ) {
   file { '/etc/resolvconf/resolv.conf.d/head':
     ensure  => present,

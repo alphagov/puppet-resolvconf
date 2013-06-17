@@ -8,7 +8,7 @@ else
   nss = @nameservers
 end
 
-unless nss.empty? or @dhcp_enabled == 'true'
+unless nss.empty? or (@dhcp_enabled == 'true' && ! @override_dhcp)
   nss.each do |ns|
 -%>
 nameserver <%= ns %>
