@@ -1,4 +1,4 @@
-require_relative '../../../../spec_helper'
+require 'spec_helper'
 
 describe 'resolvconf::config', :type => :class do
   let(:file_path) { '/etc/resolvconf/resolv.conf.d/head' }

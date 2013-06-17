@@ -1,8 +1,4 @@
-# Put module's plugins on LOAD_PATH.
-dir = File.expand_path('../../', File.dirname(__FILE__))
-$LOAD_PATH.unshift File.join(dir, 'lib')
-
-# We don't need rspec-puppet from spec_helper. Just facter.
+require 'spec_helper'
 require 'facter'
 
 describe 'dhcp_enabled' do
