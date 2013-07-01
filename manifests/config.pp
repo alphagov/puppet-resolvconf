@@ -28,6 +28,9 @@ class resolvconf::config(
   $nameservers = [],
   $override_dhcp = false
 ) {
+  validate_bool($use_local, $override_dhcp)
+  validate_array($nameservers)
+
   file { '/etc/resolvconf/resolv.conf.d/head':
     ensure  => present,
     content => template('resolvconf/etc/resolvconf/resolv.conf.d/head.erb'),
