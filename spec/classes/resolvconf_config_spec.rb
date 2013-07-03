@@ -64,8 +64,10 @@ describe 'resolvconf::config', :type => :class do
         :nameservers   => ['1.1.1.1', '2.2.2.2'],
       }}
 
-      it { should contain_file(file_path)
-        .with_content(/^nameserver 1.1.1.1\nnameserver 2.2.2.2$/)
+      it {
+        should contain_file(file_path).with_content(
+          /^nameserver 1.1.1.1\nnameserver 2.2.2.2$/
+        )
       }
     end
   end
@@ -97,8 +99,10 @@ describe 'resolvconf::config', :type => :class do
       context "nameservers => #{param.inspect}" do
         let(:params) {{ :nameservers => param }}
 
-        it { should contain_file(file_path)
-          .with_content(/^nameserver 1.1.1.1\nnameserver 2.2.2.2$/)
+        it {
+          should contain_file(file_path).with_content(
+            /^nameserver 1.1.1.1\nnameserver 2.2.2.2$/
+          )
         }
       end
     end
