@@ -30,13 +30,8 @@ class resolvconf(
   $options = undef,
   $override_dhcp = undef
 ) {
-  anchor { 'resolvconf::begin': }
-
-  class { 'resolvconf::package':
-    notify  => Class['resolvconf::config'],
-    require => Anchor['resolvconf::begin'],
-  }
-
+  anchor { 'resolvconf::begin': } ->
+  class { 'resolvconf::package': } ->
   class { 'resolvconf::config':
     use_local     => $use_local,
     nameservers   => $nameservers,
@@ -44,12 +39,10 @@ class resolvconf(
     search        => $search,
     options       => $options,
     override_dhcp => $override_dhcp,
-    notify        => Class['resolvconf::reload'],
-  }
-
-  class { 'resolvconf::reload':
-    notify  => Anchor['resolvconf::end'],
-  }
-
+  } ~>
+  class { 'resolvconf::reload': } ~>
   anchor { 'resolvconf::end': }
+
+  Anchor['resolvconf::begin']  ~> Class['resolvconf::reload']
+  Class['resolvconf::package'] ~> Class['resolvconf::reload']
 }
