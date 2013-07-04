@@ -1,0 +1,9 @@
+<% unless @domain.empty? -%>
+domain <%= @domain %>
+<% end -%>
+<% unless @search.empty? -%>
+search <%= @search.join(' ') %>
+<% end -%>
+<% unless @options.empty? -%>
+options <%= @options.join(' ') %>
+<% end -%>
