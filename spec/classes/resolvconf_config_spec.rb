@@ -1,6 +1,12 @@
 require 'spec_helper'
 
-describe 'resolvconf::config', :type => :class do
+# Focus on resolvconf::config proxy of resolvconf
+describe 'resolvconf' do
+  let(:default_facts) {{
+    :osfamily => 'Debian',
+  }}
+  let(:facts) { default_facts }
+
   let(:file_head) { '/etc/resolvconf/resolv.conf.d/head' }
   let(:file_tail) { '/etc/resolvconf/resolv.conf.d/tail' }
   let(:file_header) { /\A(#[^\n]*\n){2}/ }
@@ -47,9 +53,9 @@ describe 'resolvconf::config', :type => :class do
       end
 
       context 'true, even with dhcp_enabled' do
-        let(:facts) {{
+        let(:facts) { default_facts.merge({
           :dhcp_enabled => 'true',
-        }}
+        })}
         let(:params) {{
           :use_local => true,
         }}
@@ -69,9 +75,9 @@ describe 'resolvconf::config', :type => :class do
     end
 
     context 'dhcp_enabled true' do
-      let(:facts) {{
+      let(:facts) { default_facts.merge({
         :dhcp_enabled => 'true',
-      }}
+      })}
 
       context 'override_dhcp false (default)' do
         let(:params) {{
@@ -104,9 +110,9 @@ describe 'resolvconf::config', :type => :class do
     end
 
     context 'dhcp_enabled false' do
-      let(:facts) {{
+      let(:facts) { default_facts.merge({
         :dhcp_enabled => 'false',
-      }}
+      })}
 
       context 'nameservers => []' do
         let(:params) {{ :nameservers => [] }}
