@@ -30,6 +30,10 @@ class resolvconf(
   $options = undef,
   $override_dhcp = undef
 ) {
+  if ($::osfamily != 'Debian') {
+    fail("${::operatingsystem} not supported")
+  }
+
   anchor { 'resolvconf::begin': } ->
   class { 'resolvconf::package': } ->
   class { 'resolvconf::config':
