@@ -1,5 +1,5 @@
 name          'gdsoperations-resolvconf'
-version       '0.0.1'
+version       '0.1.0'
 source        'https://github.com/gds-operations/puppet-resolvconf'
 author        'Government Digital Service'
 license       'MIT'

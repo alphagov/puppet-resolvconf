@@ -1,2 +1,9 @@
+2012-07-03 Release 0.1.0
+- Support `domain`/`search`/`options` in `resolv.conf.d/tail`.
+- Improve test coverage.
+- Validate param data types with stdlib.
+- Apply gds-operations/puppet-module-skeleton standards.
+- First release to Forge.
+
 2013-06-27 Release 0.0.1
 - Initial release
