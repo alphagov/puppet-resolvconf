@@ -5,30 +5,40 @@
 # == Parameters:
 #
 # [*use_local*]
-#   See resolvconf::config
+#   Prepend `127.0.0.1` to the list of nameservers to prefer a local caching
+#   forwarder like dnsmasq.
+#   Default: false
 #
 # [*nameservers*]
-#   See resolvconf::config
+#   Nameservers to favour in the resulting `resolv.conf`.
+#   Default: []
 #
 # [*domain*]
-#   See resolvconf::config
+#   String value for `domain` in `resolv.conf(5)`. This is mutually
+#   exclusive to the `search` param.
+#   Default: ''
 #
 # [*search*]
-#   See resolvconf::config
+#   Array of values for `search` in `resolv.conf(5)`. This is mutually
+#   exclusive to the `domain` param.
+#   Default: []
 #
 # [*options*]
-#   See resolvconf::config
+#   Array of values for `options` in `resolv.conf(5)`.
+#   Default: []
 #
 # [*override_dhcp*]
-#   See resolvconf::config
+#   Whether nameservers should be prepended when the `dhcp_enabled` fact is
+#   true. Will supersede nameservers provided by DHCP.
+#   Default: false
 #
 class resolvconf(
-  $use_local = undef,
-  $nameservers = undef,
-  $domain = undef,
-  $search = undef,
-  $options = undef,
-  $override_dhcp = undef
+  $use_local = false,
+  $nameservers = [],
+  $domain = '',
+  $search = [],
+  $options = [],
+  $override_dhcp = false
 ) {
   if ($::osfamily != 'Debian') {
     fail("${::operatingsystem} not supported")
@@ -36,14 +46,7 @@ class resolvconf(
 
   anchor { 'resolvconf::begin': } ->
   class { 'resolvconf::package': } ->
-  class { 'resolvconf::config':
-    use_local     => $use_local,
-    nameservers   => $nameservers,
-    domain        => $domain,
-    search        => $search,
-    options       => $options,
-    override_dhcp => $override_dhcp,
-  } ~>
+  class { 'resolvconf::config': } ~>
   class { 'resolvconf::reload': } ~>
   anchor { 'resolvconf::end': }
 

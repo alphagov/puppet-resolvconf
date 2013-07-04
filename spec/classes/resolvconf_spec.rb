@@ -1,47 +1,20 @@
 require 'spec_helper'
 
 describe 'resolvconf' do
-  context 'osfamily is Debian' do
-    let(:facts) {{
-      :osfamily => 'Debian',
-    }}
+  context 'supported operating systems' do
+    ['Debian'].each do |osfamily|
+      describe "osfamily is #{osfamily}" do
+        let(:facts) {{
+          :osfamily => osfamily,
+        }}
 
-    context 'pass params to resolvconf::config' do
-      context 'defer to defaults in sub-class' do
-        let(:params) {{ }}
-
-        it { should contain_class('resolvconf::config').with(
-          :use_local     => false,
-          :nameservers   => [],
-          :domain        => '',
-          :search        => [],
-          :options       => [],
-          :override_dhcp => false
-        )}
-      end
-
-      context 'pass custom values to sub-class' do
-        {
-          :domain => {
-            :use_local     => true,
-            :nameservers   => ['1.1.1.1'],
-            :domain        => 'example.com',
-            :options       => ['timeout:1'],
-            :override_dhcp => true,
-          },
-          :search => {
-            :use_local     => true,
-            :nameservers   => ['1.1.1.1'],
-            :search        => ['example.com'],
-            :options       => ['timeout:1'],
-            :override_dhcp => true,
-          },
-        }.each do |key, vals|
-          context key do
-            let(:params) { vals }
-
-            it { should contain_class('resolvconf::config').with(vals)}
-          end
+        describe 'without any params' do
+          let(:params) {{ }}
+          it { should contain_anchor('resolvconf::begin') }
+          it { should contain_class('resolvconf::package') }
+          it { should contain_class('resolvconf::config') }
+          it { should contain_class('resolvconf::reload') }
+          it { should contain_anchor('resolvconf::end') }
         end
       end
     end
