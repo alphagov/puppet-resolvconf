@@ -27,6 +27,14 @@ class resolvconf::config(
   validate_array($nameservers, $search, $options)
   validate_string($domain)
 
+  include resolvconf::dpkg_reconfigure
+
+  file { '/etc/resolv.conf':
+    ensure => link,
+    target => '../run/resolvconf/resolv.conf',
+    notify => Class['resolvconf::dpkg_reconfigure'],
+  }
+
   file { '/etc/resolvconf/resolv.conf.d/head':
     ensure  => file,
     content => template('resolvconf/etc/resolvconf/resolv.conf.d/head.erb'),

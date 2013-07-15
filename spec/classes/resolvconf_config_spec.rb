@@ -14,6 +14,15 @@ describe 'resolvconf' do
   context 'params defaults' do
     let(:params) {{ }}
 
+    it { should include_class('resolvconf::dpkg_reconfigure') }
+
+    it 'should symlink resolv.conf' do
+      should contain_file('/etc/resolv.conf').with(
+        :ensure => 'link',
+        :target => '../run/resolvconf/resolv.conf'
+      )
+    end
+
     it 'should manage head file' do
       should contain_file(file_head).with(
         :ensure  => 'file',
