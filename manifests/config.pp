@@ -28,12 +28,12 @@ class resolvconf::config(
   validate_string($domain)
 
   file { '/etc/resolvconf/resolv.conf.d/head':
-    ensure  => present,
+    ensure  => file,
     content => template('resolvconf/etc/resolvconf/resolv.conf.d/head.erb'),
   }
 
   file { '/etc/resolvconf/resolv.conf.d/tail':
-    ensure  => present,
+    ensure  => file,
     content => template('resolvconf/etc/resolvconf/resolv.conf.d/tail.erb'),
   }
 }

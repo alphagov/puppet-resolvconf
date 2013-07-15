@@ -14,8 +14,19 @@ describe 'resolvconf' do
   context 'params defaults' do
     let(:params) {{ }}
 
-    it { should contain_file(file_head).with_content(/#{file_header}\Z/) }
-    it { should contain_file(file_tail).with_content('') }
+    it 'should manage head file' do
+      should contain_file(file_head).with(
+        :ensure  => 'file',
+        :content => /#{file_header}\Z/
+      )
+    end
+
+    it 'should manage tail file' do
+      should contain_file(file_tail).with(
+        :ensure  => 'file',
+        :content => ''
+      )
+    end
   end
 
   context 'resolv.conf.d/head' do
