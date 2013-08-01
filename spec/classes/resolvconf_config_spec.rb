@@ -16,13 +16,6 @@ describe 'resolvconf' do
 
     it { should include_class('resolvconf::dpkg_reconfigure') }
 
-    it 'should symlink resolv.conf' do
-      should contain_file('/etc/resolv.conf').with(
-        :ensure => 'link',
-        :target => '../run/resolvconf/resolv.conf'
-      )
-    end
-
     it 'should manage head file' do
       should contain_file(file_head).with(
         :ensure  => 'file',
@@ -35,6 +28,34 @@ describe 'resolvconf' do
         :ensure  => 'file',
         :content => ''
       )
+    end
+
+    context 'Ubuntu 10.04' do
+      let(:facts) { default_facts.merge({
+        :lsbdistrelease    => '10.04',
+        :lsbmajdistrelease => '10',
+      })}
+
+      it 'should symlink resolv.conf' do
+        should contain_file('/etc/resolv.conf').with(
+          :ensure => 'link',
+          :target => '/etc/resolvconf/run/resolv.conf'
+        )
+      end
+    end
+
+    context 'Ubuntu 12.04' do
+      let(:facts) { default_facts.merge({
+        :lsbdistrelease    => '12.04',
+        :lsbmajdistrelease => '12',
+      })}
+
+      it 'should symlink resolv.conf' do
+        should contain_file('/etc/resolv.conf').with(
+          :ensure => 'link',
+          :target => '../run/resolvconf/resolv.conf'
+        )
+      end
     end
   end
 

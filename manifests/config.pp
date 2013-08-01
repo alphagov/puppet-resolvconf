@@ -29,9 +29,14 @@ class resolvconf::config(
 
   include resolvconf::dpkg_reconfigure
 
+  $resolv_conf_target = $::lsbmajdistrelease ? {
+    /^1[0-1]$/ => '/etc/resolvconf/run/resolv.conf',
+    default     => '../run/resolvconf/resolv.conf',
+  }
+
   file { '/etc/resolv.conf':
     ensure => link,
-    target => '../run/resolvconf/resolv.conf',
+    target => $resolv_conf_target,
     notify => Class['resolvconf::dpkg_reconfigure'],
   }
 
