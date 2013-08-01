@@ -1,3 +1,6 @@
+2013-08-01 Release 0.3.1
+- Fix /etc/resolv.conf symlink on older Ubuntus.
+
 2013-07-31 Release 0.3.0
 - Manage /etc/resolv.conf as a symlink
 
