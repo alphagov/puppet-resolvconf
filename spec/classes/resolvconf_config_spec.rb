@@ -14,7 +14,7 @@ describe 'resolvconf' do
   context 'params defaults' do
     let(:params) {{ }}
 
-    it { should include_class('resolvconf::dpkg_reconfigure') }
+    it { should contain_class('resolvconf::dpkg_reconfigure') }
 
     it 'should manage head file' do
       should contain_file(file_head).with(
