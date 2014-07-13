@@ -1,17 +1,27 @@
-def dhcp_enabled?
-  ifs = '/etc/network/interfaces'
-  dhcp = 'false'
+require 'facter'
 
-  if FileTest.exists?(ifs) and File.read('/etc/network/interfaces') =~ /inet\s+dhcp/
-    dhcp = 'true'
+def dhcp_enabled?(ifs, recurse=true)
+  dhcp = false
+  included_ifs = []
+
+  if FileTest.exists?(ifs)
+    File.open(ifs) do |file|
+      dhcp = file.enum_for(:each_line).any? do |line|
+        if line =~ /^\s*source\s+([^\s]+)/
+          included_ifs += Dir.glob($1)
+        end
+
+        line =~ /inet\s+dhcp/
+      end
+    end
   end
 
-  dhcp
+  dhcp || included_ifs.any? { |ifs| dhcp_enabled?(ifs) }
 end
 
-Facter.add("dhcp_enabled") do
+Facter.add(:dhcp_enabled) do
   confine :osfamily => 'Debian'
   setcode do
-    dhcp_enabled?
+    dhcp_enabled?('/etc/network/interfaces')
   end
 end
