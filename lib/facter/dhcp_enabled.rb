@@ -7,7 +7,7 @@ def dhcp_enabled?(ifs, recurse=true)
   if FileTest.exists?(ifs)
     File.open(ifs) do |file|
       dhcp = file.enum_for(:each_line).any? do |line|
-        if line =~ /^\s*source\s+([^\s]+)/
+        if recurse && line =~ /^\s*source\s+([^\s]+)/
           included_ifs += Dir.glob($1)
         end
 
@@ -16,7 +16,7 @@ def dhcp_enabled?(ifs, recurse=true)
     end
   end
 
-  dhcp || included_ifs.any? { |ifs| dhcp_enabled?(ifs) }
+  dhcp || included_ifs.any? { |ifs| dhcp_enabled?(ifs, false) }
 end
 
 Facter.add(:dhcp_enabled) do
