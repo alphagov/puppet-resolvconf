@@ -1,0 +1,20 @@
+{
+  "name":         "gdsoperations-resolvconf",
+  "version":      "0.3.2",
+  "author":       "Government Digital Service",
+  "license":      "MIT",
+  "summary":      "Manage resolvconf for Ubuntu",
+  "source":       "https://github.com/gds-operations/puppet-resolvconf",
+  "project_page": "https://github.com/gds-operations/puppet-resolvconf",
+  "issues_url":   "https://github.com/gds-operations/puppet-resolvconf/issues",
+  "tags":         ["ubuntu", "networking", "resolvconf"],
+  "operatingsystem_support": [
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": ["12.04", "14.04"]
+    }
+  ],
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 3.0.0" }
+  ]
+}
