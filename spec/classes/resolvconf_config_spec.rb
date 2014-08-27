@@ -30,7 +30,7 @@ describe 'resolvconf' do
       )
     end
 
-    context 'Ubuntu 10.04' do
+    context 'Ubuntu 10.04 on Facter <= 2.1' do
       let(:facts) { default_facts.merge({
         :lsbdistrelease    => '10.04',
         :lsbmajdistrelease => '10',
@@ -44,10 +44,38 @@ describe 'resolvconf' do
       end
     end
 
-    context 'Ubuntu 12.04' do
+    context 'Ubuntu 10.04' do
+      let(:facts) { default_facts.merge({
+        :lsbdistrelease    => '10.04',
+        :lsbmajdistrelease => '10.04',
+      })}
+
+      it 'should symlink resolv.conf' do
+        should contain_file('/etc/resolv.conf').with(
+          :ensure => 'link',
+          :target => '/etc/resolvconf/run/resolv.conf'
+        )
+      end
+    end
+
+    context 'Ubuntu 12.04 on Facter <= 2.1' do
       let(:facts) { default_facts.merge({
         :lsbdistrelease    => '12.04',
         :lsbmajdistrelease => '12',
+      })}
+
+      it 'should symlink resolv.conf' do
+        should contain_file('/etc/resolv.conf').with(
+          :ensure => 'link',
+          :target => '../run/resolvconf/resolv.conf'
+        )
+      end
+    end
+
+    context 'Ubuntu 12.04' do
+      let(:facts) { default_facts.merge({
+        :lsbdistrelease    => '12.04',
+        :lsbmajdistrelease => '12.04',
       })}
 
       it 'should symlink resolv.conf' do
