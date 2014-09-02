@@ -1,3 +1,10 @@
+2014-09-02 Release 0.3.3
+- Fix detection of Ubuntu major release due to a change in Facter 2.2
+  https://docs.puppetlabs.com/facter/2.2/release_notes.html#significant-changes-to-existing-facts
+
+2014-07-14 Release 0.3.2
+- Add support for /etc/network/interfaces.d
+
 2013-08-01 Release 0.3.1
 - Fix /etc/resolv.conf symlink on older Ubuntus.
 
