@@ -30,6 +30,7 @@ describe 'resolvconf' do
       )
     end
 
+    # testing this due to https://docs.puppetlabs.com/facter/2.2/release_notes.html#significant-changes-to-existing-facts
     context 'Ubuntu 10.04 on Facter <= 2.1' do
       let(:facts) { default_facts.merge({
         :lsbdistrelease    => '10.04',
