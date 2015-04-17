@@ -18,6 +18,20 @@ class { 'resolvconf':
 
 Please see the class documentation for details of the support params.
 
+## Running tests
+
+Install dependencies:
+
+```
+bundle install
+```
+
+Run tests:
+
+```
+bundle exec rake test
+```
+
 ## License
 
 See [LICENSE](LICENSE) file.
