@@ -35,6 +35,7 @@ describe 'resolvconf' do
       let(:facts) { default_facts.merge({
         :lsbdistrelease    => '10.04',
         :lsbmajdistrelease => '10',
+        :operatingsystem   => 'Ubuntu',
       })}
 
       it 'should symlink resolv.conf' do
@@ -49,6 +50,7 @@ describe 'resolvconf' do
       let(:facts) { default_facts.merge({
         :lsbdistrelease    => '10.04',
         :lsbmajdistrelease => '10.04',
+        :operatingsystem   => 'Ubuntu',
       })}
 
       it 'should symlink resolv.conf' do
@@ -63,6 +65,7 @@ describe 'resolvconf' do
       let(:facts) { default_facts.merge({
         :lsbdistrelease    => '12.04',
         :lsbmajdistrelease => '12',
+        :operatingsystem   => 'Ubuntu',
       })}
 
       it 'should symlink resolv.conf' do
@@ -77,12 +80,43 @@ describe 'resolvconf' do
       let(:facts) { default_facts.merge({
         :lsbdistrelease    => '12.04',
         :lsbmajdistrelease => '12.04',
+        :operatingsystem   => 'Ubuntu',
       })}
 
       it 'should symlink resolv.conf' do
         should contain_file('/etc/resolv.conf').with(
           :ensure => 'link',
           :target => '../run/resolvconf/resolv.conf'
+        )
+      end
+    end
+
+    context 'Debian 7 on Facter <= 2.1' do
+      let(:facts) { default_facts.merge({
+        :lsbdistrelease    => '7.8',
+        :lsbmajdistrelease => '7.8',
+        :operatingsystem   => 'Debian',
+      })}
+
+      it 'should symlink resolv.conf' do
+        should contain_file('/etc/resolv.conf').with(
+          :ensure => 'link',
+          :target => '/etc/resolvconf/run/resolv.conf'
+        )
+      end
+    end
+
+    context 'Debian 7' do
+      let(:facts) { default_facts.merge({
+        :lsbdistrelease    => '7.8',
+        :lsbmajdistrelease => '7',
+        :operatingsystem   => 'Debian',
+      })}
+
+      it 'should symlink resolv.conf' do
+        should contain_file('/etc/resolv.conf').with(
+          :ensure => 'link',
+          :target => '/etc/resolvconf/run/resolv.conf'
         )
       end
     end
