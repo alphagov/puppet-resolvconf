@@ -6,12 +6,4 @@ if @use_local
 nameserver 127.0.0.1
 <%
 end
-
-unless @nameservers.empty? or (@dhcp_enabled == 'true' && ! @override_dhcp)
-  @nameservers.each do |ns|
--%>
-nameserver <%= ns %>
-<%
-  end
-end
 -%>

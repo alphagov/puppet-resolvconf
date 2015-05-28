@@ -125,41 +125,13 @@ describe 'resolvconf' do
   context 'resolv.conf.d/head' do
 
     context 'use_local' do
-      context 'false (default) with nameservers' do
-        let(:params) {{
-          :nameservers => ['1.1.1.1'],
-        }}
-
+      context 'false (default)' do
         it { should contain_file(file_head).with_content(
-          /#{file_header}nameserver 1\.1\.1\.1\Z/
+          /#{file_header}\Z/
         )}
       end
 
-      context 'true with nameservers' do
-        let(:params) {{
-          :use_local   => true,
-          :nameservers => ['1.1.1.1'],
-        }}
-
-        it { should contain_file(file_head).with_content(
-          /#{file_header}nameserver 127\.0\.0\.1\nnameserver 1\.1\.1\.1\Z/
-        )}
-      end
-
-      context 'true without nameservers' do
-        let(:params) {{
-          :use_local => true,
-        }}
-
-        it { should contain_file(file_head).with_content(
-          /#{file_header}nameserver 127\.0\.0\.1\Z/
-        )}
-      end
-
-      context 'true, even with dhcp_enabled' do
-        let(:facts) { default_facts.merge({
-          :dhcp_enabled => 'true',
-        })}
+      context 'true' do
         let(:params) {{
           :use_local => true,
         }}
@@ -177,7 +149,9 @@ describe 'resolvconf' do
         it { expect { should }.to raise_error(Puppet::Error, /is not a boolean/) }
       end
     end
+  end
 
+  context 'resolv.conf.d/tail' do
     context 'dhcp_enabled true' do
       let(:facts) { default_facts.merge({
         :dhcp_enabled => 'true',
@@ -188,9 +162,7 @@ describe 'resolvconf' do
           :nameservers => ['1.1.1.1'],
         }}
 
-        it { should contain_file(file_head).with_content(
-          /#{file_header}\Z/
-        )}
+        it { should contain_file(file_tail).with_content('')}
       end
 
       context 'override_dhcp true' do
@@ -199,8 +171,8 @@ describe 'resolvconf' do
           :nameservers   => ['1.1.1.1'],
         }}
 
-        it { should contain_file(file_head).with_content(
-          /#{file_header}nameserver 1\.1\.1\.1\Z/
+        it { should contain_file(file_tail).with_content(
+          /nameserver 1\.1\.1\.1\Z/
         )}
       end
 
@@ -221,7 +193,7 @@ describe 'resolvconf' do
       context 'nameservers => []' do
         let(:params) {{ :nameservers => [] }}
 
-        it { should contain_file(file_head).with_content(/#{file_header}\Z/) }
+        it { should contain_file(file_tail).with_content('') }
       end
 
       context "nameservers => ['1.1.1.1']" do
@@ -229,8 +201,8 @@ describe 'resolvconf' do
           :nameservers => ['1.1.1.1'],
         }}
 
-        it { should contain_file(file_head).with_content(
-          /#{file_header}nameserver 1\.1\.1\.1\Z/
+        it { should contain_file(file_tail).with_content(
+          /nameserver 1\.1\.1\.1\Z/
         )}
       end
 
@@ -239,8 +211,8 @@ describe 'resolvconf' do
           :nameservers => ['1.1.1.1', '2.2.2.2', '3.3.3.3'],
         }}
 
-        it { should contain_file(file_head).with_content(
-          /#{file_header}nameserver 1\.1\.1\.1\nnameserver 2\.2\.2\.2\nnameserver 3\.3\.3\.3\Z/
+        it { should contain_file(file_tail).with_content(
+          /nameserver 1\.1\.1\.1\nnameserver 2\.2\.2\.2\nnameserver 3\.3\.3\.3\Z/
         )}
       end
 
@@ -252,10 +224,6 @@ describe 'resolvconf' do
         it { expect { should }.to raise_error(Puppet::Error, /is not an Array/) }
       end
     end
-
-  end
-
-  context 'resolv.conf.d/tail' do
 
     context 'domain' do
       context 'example.com' do
