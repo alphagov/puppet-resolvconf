@@ -7,7 +7,7 @@
   "source":       "https://github.com/gds-operations/puppet-resolvconf",
   "project_page": "https://github.com/gds-operations/puppet-resolvconf",
   "issues_url":   "https://github.com/gds-operations/puppet-resolvconf/issues",
-  "tags":         ["ubuntu", "debian", "networking", "resolvconf"],
+  "tags":         ["networking", "resolvconf"],
   "operatingsystem_support": [
     {
     "operatingsystem": "Ubuntu",
