@@ -3,7 +3,7 @@
 language: ruby
 # Delete dependency locks for matrix builds.
 before_install: rm Gemfile.lock || true
-script: bundle exec rake test
+script: bundle; bundle update; bundle exec rake test
 rvm:
   - 1.9.3
 env:
