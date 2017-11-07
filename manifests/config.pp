@@ -49,11 +49,11 @@ class resolvconf::config(
 
   file { '/etc/resolvconf/resolv.conf.d/head':
     ensure  => file,
-    content => template('resolvconf/etc/resolvconf/resolv.conf.d/head.erb'),
+    content => template('resolvconf/head.erb'),
   }
 
   file { '/etc/resolvconf/resolv.conf.d/tail':
     ensure  => file,
-    content => template('resolvconf/etc/resolvconf/resolv.conf.d/tail.erb'),
+    content => template('resolvconf/tail.erb'),
   }
 }
