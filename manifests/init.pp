@@ -44,10 +44,10 @@ class resolvconf(
     fail("${::operatingsystem} not supported")
   }
 
-  anchor { 'resolvconf::begin': } ->
-  class { 'resolvconf::package': } ->
-  class { 'resolvconf::config': } ~>
-  class { 'resolvconf::reload': } ~>
+  anchor { 'resolvconf::begin': }
+  -> class { 'resolvconf::package': }
+  -> class { 'resolvconf::config': }
+  ~> class { 'resolvconf::reload': }
   anchor { 'resolvconf::end': }
 
   Anchor['resolvconf::begin']  ~> Class['resolvconf::reload']
