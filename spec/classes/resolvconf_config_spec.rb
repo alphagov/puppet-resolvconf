@@ -146,7 +146,7 @@ describe 'resolvconf' do
           :use_local => 'false',
         }}
 
-        it { expect { should }.to raise_error(Puppet::Error, /is not a boolean/) }
+        it { is_expected.to raise_error(Puppet::Error, /is not a boolean/) }
       end
     end
   end
@@ -181,7 +181,7 @@ describe 'resolvconf' do
           :override_dhcp => 'false',
         }}
 
-        it { expect { should }.to raise_error(Puppet::Error, /is not a boolean/) }
+        it { is_expected.to raise_error(Puppet::Error, /is not a boolean/) }
       end
     end
 
@@ -221,7 +221,7 @@ describe 'resolvconf' do
           :nameservers => '1.1.1.1 2.2.2.2',
         }}
 
-        it { expect { should }.to raise_error(Puppet::Error, /is not an Array/) }
+        it { is_expected.to raise_error(Puppet::Error, /is not an Array/) }
       end
     end
 
@@ -239,7 +239,7 @@ describe 'resolvconf' do
           :domain => ['foo.example.com', 'bar.example.com'],
         }}
 
-        it { expect { should }.to raise_error(Puppet::Error, /is not a string/) }
+        it { is_expected.to raise_error(Puppet::Error, /is not a string/) }
       end
     end
 
@@ -257,7 +257,7 @@ describe 'resolvconf' do
           :search => 'foo.example.com',
         }}
 
-        it { expect { should }.to raise_error(Puppet::Error, /is not an Array/) }
+        it { is_expected.to raise_error(Puppet::Error, /is not an Array/) }
       end
     end
 
@@ -267,7 +267,7 @@ describe 'resolvconf' do
         :search => ['example.com'],
       }}
 
-      it { expect { should }.to raise_error(Puppet::Error, /mutually exclusive/) }
+      it { is_expected.to raise_error(Puppet::Error, /mutually exclusive/) }
     end
 
     context 'options' do
@@ -284,7 +284,7 @@ describe 'resolvconf' do
           :search => 'timeout:1',
         }}
 
-        it { expect { should }.to raise_error(Puppet::Error, /is not an Array/) }
+        it { is_expected.to raise_error(Puppet::Error, /is not an Array/) }
       end
     end
 

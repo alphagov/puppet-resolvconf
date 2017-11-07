@@ -27,7 +27,7 @@ describe 'resolvconf' do
         :operatingsystem => 'CentOS',
       }}
 
-      it { expect { should }.to raise_error(Puppet::Error, /CentOS not supported/) }
+      it { is_expected.to raise_error(Puppet::Error, /CentOS not supported/) }
     end
   end
 end
