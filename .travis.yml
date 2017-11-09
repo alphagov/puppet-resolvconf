@@ -1,6 +1,7 @@
 ---
 language: ruby
 before_install: rm Gemfile.lock || true
+bundler_args: --without functional_tests
 script: bundle exec rake test
 matrix:
   fast_finish: true
