@@ -1,0 +1,33 @@
+name: Ruby
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        name: [
+          current-puppet,
+          future-puppet,
+        ]
+        include:
+        - name: current-puppet
+          ruby: 1.9.x
+          puppet: 3.8.0
+        - name: future-puppet
+          ruby: 2.4.x
+          puppet: 6.11.1
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: Build and test with Rake
+      run: |
+        gem install bundler
+        bundle install --jobs 4 --retry 3 --without functional_tests
+        bundle exec rake test 
+      env:
+        PUPPET_VERSION: ${{ matrix.puppet }}
