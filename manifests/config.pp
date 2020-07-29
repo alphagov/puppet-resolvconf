@@ -23,10 +23,6 @@ class resolvconf::config(
     fail('The domain and search params are mutually exclusive')
   }
 
-  validate_bool($use_local, $override_dhcp)
-  validate_array($nameservers, $search, $options)
-  validate_string($domain)
-
   include resolvconf::dpkg_reconfigure
 
   case $::operatingsystem {
