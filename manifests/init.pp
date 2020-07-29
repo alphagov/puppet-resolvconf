@@ -33,12 +33,12 @@
 #   Default: false
 #
 class resolvconf(
-  $use_local = false,
-  $nameservers = [],
-  $domain = '',
-  $search = [],
-  $options = [],
-  $override_dhcp = false
+  Boolean       $use_local     = false,
+  Array[String] $nameservers   = [],
+  String        $domain        = '',
+  Array[String] $search        = [],
+  Array[String] $options       = [],
+  Boolean       $override_dhcp = false
 ) {
   if ($::osfamily != 'Debian') {
     fail("${::operatingsystem} not supported")
